@@ -1,0 +1,28 @@
+components: |
+    A list of enabled and disabled components. Components in the disabled list 
+    will automatically be removed from the enabled list. Fully qualified class names can 
+    or aliases (automatically added to the list by CommandBook) can be used as component names.
+
+component: |
+    Configurations for CommandBook's built-in components are stored here.
+    Custom component configurations are stored as individual files in the the config/ folder
+
+# This is a rather ugly way of handling command conflicts, but I'm keeping the comment in 
+# here just in case somebody has a really good reason to add it back someday
+disabled-commands: |
+    CommandBook commands can be added to this list, WITHOUT a preceding /, will not be 
+    registered. Other plugins can then register their conflicting commands.
+ 
+# This is the future! A bit tricky to explain though :V
+low-priority-command-registration: |
+    When this setting is enabled, CommandBook's commands will be registered AFTER every 
+    other plugin's commands. If any other plugin registers a command that conflicts with
+    one of CommandBook's commands, the CommandBook command will be accessible with 
+    /commandbook:<command>, and the other plugin's command will be accessible 
+    with /<command>
+    
+op-permissions: Give operators (set with the Minecraft /op command) all permissions.
+crappy-wrapper-compat: Disables some features to be compatible with badly-written server wrappers.
+use-display-names: Use users' display names rather than than their raw username in various messages. Display names are set by other plugins.
+lookup-with-display-names: Similar to use-display-names, this allows usage of users' display names when looking up players.
+broadcast-changes: For /time, /weather, and other commands, broadcast change messages to everyone when you change world information with the commands.
