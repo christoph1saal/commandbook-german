@@ -394,7 +394,7 @@ public class TimeComponent extends BukkitComponent implements Listener {
                 player.setPlayerTime(args.hasFlag('w') ? Integer.parseInt(timeStr) : matchTime(timeStr), args.hasFlag('w'));
             }
             if (!included) {
-                sender.sendMessage(ChatColor.GRENN + "Spieler Zeit festgesetz bei " + CommandBookUtil.getTimeString(matchTime(timeStr)));
+                sender.sendMessage(ChatColor.GREEN + "Spieler Zeit festgesetz bei " + CommandBookUtil.getTimeString(matchTime(timeStr)));
             }
         }
     }
