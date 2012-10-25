@@ -99,15 +99,15 @@ public class TimeComponent extends BukkitComponent implements Listener {
                 World world = CommandBook.server().getWorld(entry.getKey());
 
                 if (world == null) {
-                    CommandBook.logger().info("Could not time-lock unknown world '"
+                    CommandBook.logger().info("Zeit nicht angehalten unbekannte Welt '"
                             + entry.getKey() + "'");
                     continue;
                 }
 
                 world.setTime(time);
                 lock(world);
-                CommandBook.logger().info("Time locked to '"
-                        + CommandBookUtil.getTimeString(time) + "' for world '"
+                CommandBook.logger().info("Zeit angehalten bei '"
+                        + CommandBookUtil.getTimeString(time) + "' in '"
                         + world.getName() + "'");
             }
         }
@@ -135,8 +135,8 @@ public class TimeComponent extends BukkitComponent implements Listener {
         if (lockedTime != null) {
             world.setTime(lockedTime);
             lock(world);
-            CommandBook.logger().info("Time locked to '"
-                    + CommandBookUtil.getTimeString(lockedTime) + "' for world '"
+            CommandBook.logger().info("Zeit angehalten bei '"
+                    + CommandBookUtil.getTimeString(lockedTime) + "' in '"
                     + world.getName() + "'");
         }
     }
@@ -254,7 +254,7 @@ public class TimeComponent extends BukkitComponent implements Listener {
             return (0 - 8 + 24) * 1000;
         }
 
-        throw new CommandException("Time input format unknown.");
+        throw new CommandException("Zeit Format unbekannt!");
     }
 
     public class Commands {
@@ -304,22 +304,22 @@ public class TimeComponent extends BukkitComponent implements Listener {
                 world.setTime(matchTime(timeStr));
             }
 
-            String verb = "set";
+            String verb = "gesetzt";
 
             // Locking
             if (args.hasFlag('l')) {
                 CommandBook.inst().checkPermission(sender, "commandbook.time.lock");
                 lock(world);
-                verb = "locked";
+                verb = "angehalten";
             }
 
             if (CommandBook.inst().broadcastChanges) {
-                CommandBook.server().broadcastMessage(ChatColor.YELLOW
-                        + PlayerUtil.toColoredName(sender, ChatColor.YELLOW) + " " + verb + " the time of '"
-                        + world.getName() + "' to "
+                CommandBook.server().broadcastMessage(ChatColor.GREEN
+                        + PlayerUtil.toColoredName(sender, ChatColor.GOLD) + " " + verb + " die Zeit von '"
+                        + world.getName() + "' bei "
                         + CommandBookUtil.getTimeString(world.getTime()) + ".");
             } else {
-                sender.sendMessage(ChatColor.YELLOW + "Time " + verb + " to "
+                sender.sendMessage(ChatColor.GREEN + "Zeit " + verb + " bei "
                         + CommandBookUtil.getTimeString(world.getTime()) + ".");
             }
         }
@@ -362,14 +362,14 @@ public class TimeComponent extends BukkitComponent implements Listener {
                 for (Player player : players) {
                     player.resetPlayerTime();
                     if (!args.hasFlag('s')) {
-                        player.sendMessage(ChatColor.YELLOW + "Your time was reset to world time");
+                        player.sendMessage(ChatColor.GREEN + "Weltzeit wurde wiederhergestellt!");
                     }
                     if (sender instanceof Player && sender.equals(player)) {
                         included = true;
                     }
                 }
                 if (!included) {
-                    sender.sendMessage(ChatColor.YELLOW + "Player times reset");
+                    sender.sendMessage(ChatColor.GREEN + "Spielerzeit normalisiert!");
                 }
                 return;
             }
@@ -386,15 +386,15 @@ public class TimeComponent extends BukkitComponent implements Listener {
 
             for (Player player : players) {
                 if (!player.equals(sender)) {
-                    player.sendMessage(ChatColor.YELLOW + "Your time set to " + CommandBookUtil.getTimeString(player.getPlayerTime()));
+                    player.sendMessage(ChatColor.GREEN + "Deine Zeit wurdef estgesetzt bei " + CommandBookUtil.getTimeString(player.getPlayerTime()));
                 } else {
-                    player.sendMessage(ChatColor.YELLOW + "Your time set to " + CommandBookUtil.getTimeString(player.getPlayerTime()));
+                    player.sendMessage(ChatColor.GREEN + "Deine Zeit wurde festzgesetz bei " + CommandBookUtil.getTimeString(player.getPlayerTime()));
                     included = true;
                 }
                 player.setPlayerTime(args.hasFlag('w') ? Integer.parseInt(timeStr) : matchTime(timeStr), args.hasFlag('w'));
             }
             if (!included) {
-                sender.sendMessage(ChatColor.YELLOW + "Player times set to " + CommandBookUtil.getTimeString(matchTime(timeStr)));
+                sender.sendMessage(ChatColor.GRENN + "Spieler Zeit festgesetz bei " + CommandBookUtil.getTimeString(matchTime(timeStr)));
             }
         }
     }
